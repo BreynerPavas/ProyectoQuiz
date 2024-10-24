@@ -129,6 +129,13 @@ function mostrarResultados(){
     for(var i = 0; i<respuestasFinales.length;i++){
         if(respuestasFinales[i] == peticion[i].correct_answer){
             correctas++;
+            document.getElementById(i).style.backgroundColor = "lightgreen"
+        }else{
+            console.log("malas");
+            
+            console.log(document.getElementById(i));
+            document.getElementById(i).style.backgroundColor = "lightcoral"
+            // document.getElementById(i).style.backgroundColor = "lightred"
         }
     }
     document.getElementById("userScore").innerText = correctas;
@@ -167,6 +174,7 @@ document.getElementById("bNext").addEventListener("click",(e) => {
         document.getElementById("titleHeader").innerText = "Results"
         navs[2].className = "nav-link active";
         divResults.className = "d-block";
+        document.getElementById("correctionAnswers").classList.remove("d-none")
         //aqui vamos a ver cuales han sido las respuestas del usuario
         
         mostrarResultados();
@@ -182,6 +190,7 @@ document.getElementById("bNext").addEventListener("click",(e) => {
         document.getElementById("bNext").setAttribute("disabled","")
     }
 })
+
 //intento de mi grafica
 let labels = [];
 const nIntentos = JSON.parse(localStorage.getItem("intentosPrevios")).score.length;
@@ -202,12 +211,21 @@ const data = {
     data: data,
     options: {}
   };
-  window.onload = () => {
+  window.onload = () => { // aqui es necesario hacerlo una vez cargue
     const myChart = new Chart('myChart', config);
   }
   
-  console.log(myChart);
-  
+  let circlesQuestion = document.getElementsByClassName("questionsCircle");
+  Array.from(circlesQuestion).forEach((circle)=>{
+      circle.style.cursor = "pointer"
+      circle.addEventListener("click",(e)=>{
+        document.getElementById("exampleModalLabel").innerText = peticion[e.target.id].question;
+        document.getElementById("correctAnswer").innerText = peticion[e.target.id].correct_answer;
+        document.getElementById("userAnswer").innerText = respuestasFinales[e.target.id]
 
-console.log(data);
-
+          console.log(e.target.id); //Aqui obtenemos el id de la pregunta
+          
+      })
+  })
+// para hacer los botones tengo pensado hacer 10 botones que esten disabled hasta las preguntas ya contestadas
+//que cuando le haga click a ese boton me haga la misma funcionalidad de

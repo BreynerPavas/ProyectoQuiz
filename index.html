@@ -84,14 +84,69 @@
             10</div>
           <div class="status" id="statusScore">Status: In progress</div>
         </div>
+        <div class="circle-container d-none" id="correctionAnswers">
+          <div class="outer-div questionsCircle" id="0" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="--i:0;">1</div>
+          <div class="outer-div questionsCircle" id="1" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="--i:1;">2</div>
+          <div class="outer-div questionsCircle" id="2" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="--i:2;">3</div>
+          <div class="outer-div questionsCircle" id="3" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="--i:3;">4</div>
+          <div class="outer-div questionsCircle" id="4" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="--i:4;">5</div>
+          <div class="outer-div questionsCircle" id="5" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="--i:5;">6</div>
+          <div class="outer-div questionsCircle" id="6" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="--i:6;">7</div>
+          <div class="outer-div questionsCircle" id="7" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="--i:7;">8</div>
+          <div class="outer-div questionsCircle" id="8" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="--i:8;">9</div>
+          <div class="outer-div questionsCircle" id="9" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="--i:9;">10</div>
+        </div>
       </div>
       <div class="container">
         <h5 class="m-2 p-2">Previous Tries</h5>
-        <div class="container d-flex">
+        <div class="container "><hr>
           <canvas id="myChart"></canvas>
 
         </div>
       </div>
+      <!-- aqui el modal -->
+      <div class="modal fade " id="exampleModal" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="card w-100">
+              <div class="card-header">
+                Question:
+              </div>
+              <div class="card-body">
+                <h5 class="card-title" id="exampleModalLabel">Are you ready for
+                  take this quiz?</h5>
+                <p class="card-text" id=""><strong>Correct Answer:</strong></p>
+                <p class="card-text" id="correctAnswer"></p>
+                <p class="card-text" id=""><strong>Your answer:</strong></p>
+                <p class="card-text" id="userAnswer"></p>
+                <button type="button" class="btn btn-secondary float-end"
+                  data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- aqui  acaba el modal-->
 
     </div>
 
