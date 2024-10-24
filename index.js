@@ -3,11 +3,11 @@ let divHome = document.getElementById("home");
 let divQuiz = document.getElementById("quiz");
 let divResults = document.getElementById("results");
 Array.from(navs).forEach(nav => {
-    nav.addEventListener("click",(e)=>{
+    nav.addEventListener("click", (e) => {
         quitarActive(navs);
         e.target.className = "nav-link active";
         document.getElementById("titleHeader").innerText = e.target.innerText
-        
+
         switch (e.target.id) {
             case "navHome":
                 quitarDisplayNone();
@@ -27,25 +27,25 @@ Array.from(navs).forEach(nav => {
     })
 });
 
-function quitarDisplayNone(){
+function quitarDisplayNone() {
     divHome.className = "d-none"
     divQuiz.className = "d-none"
     divResults.className = "d-none"
 }
 
-function quitarActive(navs){
+function quitarActive(navs) {
     Array.from(navs).forEach(nav => {
         nav.className = "nav-link"
     });
 }
-document.getElementById("bQuiz").addEventListener("click",()=>{
+document.getElementById("bQuiz").addEventListener("click", () => {
     quitarDisplayNone()
     quitarActive(navs);
     document.getElementById("titleHeader").innerText = "Quiz"
     navs[1].className = "nav-link active";
     divQuiz.className = "d-block"
 })
-document.getElementById("bResults").addEventListener("click",()=>{
+document.getElementById("bResults").addEventListener("click", () => {
     quitarDisplayNone()
     quitarActive(navs);
     navs[2].className = "nav-link active";
@@ -58,13 +58,13 @@ let actualQuestionIndex = 0;
 
 axios.get("https://opentdb.com/api.php?amount=10&type=multiple")
 
-.then((res) => {
-    peticion = res.data.results;
-})
-      
-.catch((err) => console.error(err));
+    .then((res) => {
+        peticion = res.data.results;
+    })
 
-function obtenerRespuestas(i){
+    .catch((err) => console.error(err));
+
+function obtenerRespuestas(i) {
     let preguntasNoOrdenadas = [];
     preguntasNoOrdenadas.push(peticion[i].correct_answer);
     peticion[i].incorrect_answers.forEach(respuesta => {
@@ -77,29 +77,29 @@ function mezclarArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
         // Generar un índice aleatorio entre 0 y i
         const j = Math.floor(Math.random() * (i + 1));
-        
+
         // Intercambiar los elementos arr[i] y arr[j]
         [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr;
 }
 
-document.getElementById("bStart").addEventListener("click",()=>{
-    
+document.getElementById("bStart").addEventListener("click", () => {
+
     document.getElementById("bStart").className = "btn btn-primary d-none";
-    document.getElementById("bNext").className = "btn btn-primary "
+    document.getElementById("bNext").className = "btn btn-primary float-end"
     mostrarPregunta();
 
-    
+
 })
 
-function quitarSeleccionado(){
+function quitarSeleccionado() {
     let answers = document.getElementsByClassName("answers");
     Array.from(answers).forEach(element => {
         element.className = "answers m-2 p-2"
     });
 }
-function mostrarPregunta(){
+function mostrarPregunta() {
     let preguntasAux = (obtenerRespuestas(actualQuestionIndex));
     preguntasAux = mezclarArray(preguntasAux); // ya tenemos todas las respuestas en un array mezclado
     document.getElementById("currentQuestionText").innerText = peticion[actualQuestionIndex].question;
@@ -107,17 +107,107 @@ function mostrarPregunta(){
     preguntasAux.forEach(pregunta => {
         let pAux = document.createElement("p");
         pAux.className = "m-2 p-2 answers";
-        pAux.setAttribute("style","border:1px solid gray");
+        pAux.setAttribute("style", "border:1px solid gray");
         pAux.innerText = pregunta;
-        pAux.addEventListener("click",(e)=>{
-            console.log(e.target);
+        pAux.addEventListener("click", (e) => {
             quitarSeleccionado();
             e.target.className = "answers selected m-2 p-2";
-            
+            document.getElementById("bNext").removeAttribute("disabled")
+
+
         })
-        
+
         document.getElementById("CurrentQuestionAnswers").appendChild(pAux);
     });
 
 }
+let respuestasFinales = []
+let correctas = 0;
+//aqui vamos a hacer la logica para ver si las preguntas estan bien o no
+function mostrarResultados(){
+    
+    for(var i = 0; i<respuestasFinales.length;i++){
+        if(respuestasFinales[i] == peticion[i].correct_answer){
+            correctas++;
+        }
+    }
+    document.getElementById("userScore").innerText = correctas;
+    if(correctas<=4){
+        setColor("red")
+        document.getElementById("statusScore").innerText = "Status: Fail"
+    }else{
+        setColor("green")
+        document.getElementById("statusScore").innerText = "Status: Success"
+
+    }
+}
+function setColor(color){
+    document.getElementById("userScore").style.color = color;
+    document.getElementById("statusScore").style.color = color;
+    document.getElementById("scoreTitle").style.color = color;
+    document.getElementById("maxScore").style.color = color;
+    document.getElementById("scoreboard").style.border = `5px solid ${color}`;
+
+}
+const intentosPrevios = {
+    score: JSON.parse(localStorage.getItem("intentosPrevios"))?.score || []
+}
 //cuando le demos a next vamos a guardar el p que se selecciono y despues lo validaremos con la peticion porque estan en el mismo orden indexado
+document.getElementById("bNext").addEventListener("click",(e) => {
+    
+    if(actualQuestionIndex==8){
+        document.getElementById("bNext").innerText = "Finish"
+    }
+    if(actualQuestionIndex>=9){// aqui tenemos que hacer la logica cuando acabemos las preguntas
+        actualQuestionIndex = 0;
+        let seleccion = document.getElementsByClassName("selected");
+        respuestasFinales.push(seleccion[0].innerText);
+        quitarDisplayNone();
+        quitarActive(navs);
+        document.getElementById("titleHeader").innerText = "Results"
+        navs[2].className = "nav-link active";
+        divResults.className = "d-block";
+        //aqui vamos a ver cuales han sido las respuestas del usuario
+        
+        mostrarResultados();
+        //ahora vamos a guardarlos en el localStorage
+        intentosPrevios.score.push(correctas);
+        localStorage.setItem("intentosPrevios",JSON.stringify(intentosPrevios))
+        
+    }else{
+        let seleccion = document.getElementsByClassName("selected");
+        respuestasFinales.push(seleccion[0].innerText);
+        actualQuestionIndex++;
+        mostrarPregunta();
+        document.getElementById("bNext").setAttribute("disabled","")
+    }
+})
+//intento de mi grafica
+let labels = [];
+const nIntentos = JSON.parse(localStorage.getItem("intentosPrevios")).score.length;
+for (let index = 0; index < nIntentos; index++) {
+    labels.push(index)
+}
+const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Previous Tries',
+      backgroundColor: '#0d6efd',
+      borderColor: '#0d6efd',
+      data: JSON.parse(localStorage.getItem("intentosPrevios")).score, // aqui va el array de valores
+    }]
+  };
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {}
+  };
+  window.onload = () => {
+    const myChart = new Chart('myChart', config);
+  }
+  
+  console.log(myChart);
+  
+
+console.log(data);
+
