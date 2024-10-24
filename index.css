@@ -1,0 +1,10 @@
+*{
+    box-sizing: border-box;
+}
+.answers{
+    cursor: pointer;
+    border-radius: 10px;
+}
+.selected{
+    border: 2px solid black !important;
+}
