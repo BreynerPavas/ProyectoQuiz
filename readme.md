@@ -20,19 +20,11 @@ Para que el proyecto funcione correctamente, necesitas lo siguiente:
 - Conexión a internet (para cargar las bibliotecas externas y la API de trivia).
 - Un navegador que soporte las tecnologías de **JavaScript** moderno y **localStorage**.
 
-### Librerías y tecnologías usadas:
+## Librerías y tecnologías usadas:
 
 - [Axios](https://axios-http.com/) para realizar las peticiones HTTP.
 - [Bootstrap 5.3](https://getbootstrap.com/) para la interfaz de usuario.
 - [Chart.js](https://www.chartjs.org/) para mostrar las gráficas de estadísticas.
-
-## Estructura de Archivos
-
-```bash
-├── index.html    # Archivo principal de la aplicación
-├── index.js      # Lógica principal en JavaScript
-├── index.css     # Estilos personalizados de la aplicación
-├── README.md     # Este archivo
 
 ## Funcionalidades
 
@@ -73,14 +65,6 @@ Para que el proyecto funcione correctamente, necesitas lo siguiente:
 
 No requiere instalación. Simplemente abre `index.html` en un navegador moderno para ejecutar la aplicación.
 
-## Estructura de Archivos
-
-```bash
-├── index.html    # Archivo principal de la aplicación
-├── index.js      # Lógica principal en JavaScript
-├── index.css     # Estilos personalizados de la aplicación
-├── img           # donde guardaremos las imagenes que mostraremos en este archivo
-├── README.md     # Este archivo
 
 ## Vistas de la Aplicación
 
