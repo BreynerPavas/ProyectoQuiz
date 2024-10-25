@@ -229,3 +229,19 @@ const data = {
   })
 // para hacer los botones tengo pensado hacer 10 botones que esten disabled hasta las preguntas ya contestadas
 //que cuando le haga click a ese boton me haga la misma funcionalidad de
+
+let bPreguntas = document.getElementsByClassName("bPregunta");
+function limpiarActiveBotones(){
+    Array.from(bPreguntas).forEach((bPregunta)=>{
+        bPregunta.classList.remove("active")
+    })
+}
+Array.from(bPreguntas).forEach((bPregunta)=>{
+    
+    bPregunta.addEventListener("click",(e)=>{
+        limpiarActiveBotones();
+        console.log(e.target.classList);
+        
+        e.target.classList.add("active")
+    })
+})
