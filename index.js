@@ -61,10 +61,10 @@ let actualQuestionIndex = 0;
 axios.get("https://opentdb.com/api.php?amount=10&type=multiple")
 
     .then((res) => {
-        
+
         peticion = res.data.results;
         console.log(peticion);
-        
+
     })
 
     .catch((err) => console.error(err));
@@ -128,35 +128,35 @@ function mostrarPregunta() {
     });
 
 }
-let respuestasFinales = ["","","","","","","","","",""]
+let respuestasFinales = ["", "", "", "", "", "", "", "", "", ""]
 let correctas = 0;
 //aqui vamos a hacer la logica para ver si las preguntas estan bien o no
-function mostrarResultados(){
-    
-    for(var i = 0; i < respuestasFinales.length;i++){
-        if(respuestasFinales[i] == peticion[i].correct_answer){
+function mostrarResultados() {
+
+    for (var i = 0; i < respuestasFinales.length; i++) {
+        if (respuestasFinales[i] == peticion[i].correct_answer) {
             correctas++;
             document.getElementById(i).style.backgroundColor = "lightgreen"
-        }else{
-            console.log("malas");
-            
-            //console.log(document.getElementById(i));
+        } else {
+
+
+
             document.getElementById(i).style.backgroundColor = "lightcoral"
-            // document.getElementById(i).style.backgroundColor = "lightred"
+
         }
     }
 
     document.getElementById("userScore").innerText = correctas;
-    if(correctas<=4){
+    if (correctas <= 4) {
         setColor("red")
         document.getElementById("statusScore").innerText = "Status: Fail"
-    }else{
+    } else {
         setColor("green")
         document.getElementById("statusScore").innerText = "Status: Success"
 
     }
 }
-function setColor(color){
+function setColor(color) {
     document.getElementById("userScore").style.color = color;
     document.getElementById("statusScore").style.color = color;
     document.getElementById("scoreTitle").style.color = color;
@@ -168,16 +168,16 @@ const intentosPrevios = {
     score: JSON.parse(localStorage.getItem("intentosPrevios"))?.score || []
 }
 //cuando le demos a next vamos a guardar el p que se selecciono y despues lo validaremos con la peticion porque estan en el mismo orden indexado
-document.getElementById("bNext").addEventListener("click",(e) => {
-    
-    if(actualQuestionIndex==8){
+document.getElementById("bNext").addEventListener("click", (e) => {
+
+    if (actualQuestionIndex == 8) {
         document.getElementById("bNext").innerText = "Finish";
         preguntaActual();
 
     }
-    if(actualQuestionIndex>=9){// aqui tenemos que hacer la logica cuando acabemos las preguntas
+    if (actualQuestionIndex >= 9) {// aqui tenemos que hacer la logica cuando acabemos las preguntas
         let seleccion = document.getElementsByClassName("selected");
-        respuestasFinales[actualQuestionIndex]=(seleccion[0].innerText);
+        respuestasFinales[actualQuestionIndex] = (seleccion[0].innerText);
         quitarDisplayNone();
         quitarActive(navs);
         document.getElementById("titleHeader").innerText = "Results"
@@ -185,26 +185,27 @@ document.getElementById("bNext").addEventListener("click",(e) => {
         divResults.className = "d-block";
         document.getElementById("correctionAnswers").classList.remove("d-none")
         //aqui vamos a ver cuales han sido las respuestas del usuario
-        
+
         mostrarResultados();
         //ahora vamos a guardarlos en el localStorage
         intentosPrevios.score.push(correctas);
-        localStorage.setItem("intentosPrevios",JSON.stringify(intentosPrevios))
-        
-    }else{
+        localStorage.setItem("intentosPrevios", JSON.stringify(intentosPrevios))
+
+    } else {
         let seleccion = document.getElementsByClassName("selected");
-        respuestasFinales[actualQuestionIndex]=(seleccion[0].innerText);
+        respuestasFinales[actualQuestionIndex] = (seleccion[0].innerText);
         actualQuestionIndex++;
         mostrarPregunta();
         preguntaActual();
-        document.getElementById("bNext").setAttribute("disabled","")
+        document.getElementById("bNext").setAttribute("disabled", "")
     }
 })
-function preguntaActual(){
+function preguntaActual() {
     limpiarActiveBotones();
-    console.log(document.getElementById("b"+actualQuestionIndex));
-    
-    document.getElementById("b"+actualQuestionIndex).classList.add("active");
+
+    document.getElementById("b" + actualQuestionIndex).classList.add("active");
+
+
 }
 
 //intento de mi grafica
@@ -216,54 +217,56 @@ for (let index = 0; index < nIntentos; index++) {
 const data = {
     labels: labels,
     datasets: [{
-      label: 'Previous Tries',
-      backgroundColor: '#0d6efd',
-      borderColor: '#0d6efd',
-      data: JSON.parse(localStorage.getItem("intentosPrevios"))?.score, // aqui va el array de valores
+        label: 'Previous Tries',
+        backgroundColor: '#0d6efd',
+        borderColor: '#0d6efd',
+        data: JSON.parse(localStorage.getItem("intentosPrevios"))?.score, // aqui va el array de valores
     }]
-  };
-  const config = {
+};
+const config = {
     type: 'bar',
     data: data,
     options: {}
-  };
-  window.onload = () => { // aqui es necesario hacerlo una vez cargue
+};
+window.onload = () => { // aqui es necesario hacerlo una vez cargue
     const myChart = new Chart('myChart', config);
-  }
-  
-  let circlesQuestion = document.getElementsByClassName("questionsCircle");
-  Array.from(circlesQuestion).forEach((circle)=>{
-      circle.style.cursor = "pointer"
-      circle.addEventListener("click",(e)=>{
+}
+
+let circlesQuestion = document.getElementsByClassName("questionsCircle");
+Array.from(circlesQuestion).forEach((circle) => {
+    circle.style.cursor = "pointer"
+    circle.addEventListener("click", (e) => {
         document.getElementById("exampleModalLabel").innerText = peticion[e.target.id].question;
         document.getElementById("correctAnswer").innerText = peticion[e.target.id].correct_answer;
         document.getElementById("userAnswer").innerText = respuestasFinales[e.target.id]
 
-          //console.log(e.target.id); //Aqui obtenemos el id de la pregunta
-          
-      })
-  })
+    })
+})
 // para hacer los botones tengo pensado hacer 10 botones que esten disabled hasta las preguntas ya contestadas
 //que cuando le haga click a ese boton me haga la misma funcionalidad de
 
 
-function limpiarActiveBotones(){
-    Array.from(bPreguntas).forEach((bPregunta)=>{
+function limpiarActiveBotones() {
+    Array.from(bPreguntas).forEach((bPregunta) => {
         bPregunta.classList.remove("active")
     })
 }
-Array.from(bPreguntas).forEach((bPregunta)=>{
-    console.log(bPregunta);
-    
-    bPregunta.addEventListener("click",(e)=>{
-        // console.log("hola");
-        
+Array.from(bPreguntas).forEach((bPregunta) => {
+
+    bPregunta.addEventListener("click", (e) => {
+
         limpiarActiveBotones();
         let idBoton = e.target.id[1];
-        console.log(idBoton);
         actualQuestionIndex = idBoton;
         mostrarPregunta();
-        
         e.target.classList.add("active")
+        //para mostrar la respuesta que has marcado
+        let answers = document.getElementsByClassName("answers");
+        Array.from(answers).forEach(element => {
+            if(element.innerHTML == respuestasFinales[actualQuestionIndex]){
+                console.log(element.classList.add("selected"));
+                
+            }
+        });
     })
 })
