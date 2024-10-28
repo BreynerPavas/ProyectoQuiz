@@ -61,7 +61,10 @@ let actualQuestionIndex = 0;
 axios.get("https://opentdb.com/api.php?amount=10&type=multiple")
 
     .then((res) => {
+        
         peticion = res.data.results;
+        console.log(peticion);
+        
     })
 
     .catch((err) => console.error(err));
@@ -130,7 +133,7 @@ let correctas = 0;
 //aqui vamos a hacer la logica para ver si las preguntas estan bien o no
 function mostrarResultados(){
     
-    for(var i = 0; i<respuestasFinales.length;i++){
+    for(var i = 0; i < respuestasFinales.length;i++){
         if(respuestasFinales[i] == peticion[i].correct_answer){
             correctas++;
             document.getElementById(i).style.backgroundColor = "lightgreen"
@@ -142,6 +145,7 @@ function mostrarResultados(){
             // document.getElementById(i).style.backgroundColor = "lightred"
         }
     }
+
     document.getElementById("userScore").innerText = correctas;
     if(correctas<=4){
         setColor("red")
@@ -172,7 +176,6 @@ document.getElementById("bNext").addEventListener("click",(e) => {
 
     }
     if(actualQuestionIndex>=9){// aqui tenemos que hacer la logica cuando acabemos las preguntas
-        actualQuestionIndex = 0;
         let seleccion = document.getElementsByClassName("selected");
         respuestasFinales[actualQuestionIndex]=(seleccion[0].innerText);
         quitarDisplayNone();
