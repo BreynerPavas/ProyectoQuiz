@@ -1,73 +1,74 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
-body{
-    overflow-y: scroll !important;
+body {
+  overflow-y: scroll !important;
 }
 .answers {
-    cursor: pointer;
-    border-radius: 10px;
+  cursor: pointer;
+  border-radius: 10px;
 }
 
 .selected {
-    border: 2px solid black !important;
+  border: 2px solid black !important;
 }
 
 /* para results */
 .scoreboard {
-    width: 350px;
-    height: 350px;
-    border: 5px solid gray;
-    border-radius: 50%;
-    padding: 20px;
-    text-align: center;
-    background-color: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin: 50px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 350px;
+  height: 350px;
+  border: 5px solid gray;
+  border-radius: 50%;
+  padding: 20px;
+  text-align: center;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .score {
-    font-size: 3rem;
-    font-weight: bold;
-    color: gray;
+  font-size: 3rem;
+  font-weight: bold;
+  color: gray;
 }
-.scoreTitle{
-    color:gray;
+.scoreTitle {
+  color: gray;
 }
 
 .status {
-    margin-top: 20px;
-    font-size: 1.2rem;
-    color: gray;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: gray;
 }
 /* Para los div de las preguntas */
 .circle-container {
-    position: absolute;
-    top: 270px;
-    left: 48.5%;
-    width:350px; /* Mantener igual al scoreboard */
-    height: 350px; /* Mantener igual al scoreboard */
+  position: absolute;
+  top: 270px;
+  left: 48.5%;
+  width: 350px; /* Mantener igual al scoreboard */
+  height: 350px; /* Mantener igual al scoreboard */
 }
 
 .outer-div {
-    position: absolute;
-    width: 50px; /* Tamaño de los divs */
-    height: 50px; /* Tamaño de los divs */
-    background-color: lightgray; /* Color de fondo */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%; /* Hacerlo circular */
+  position: absolute;
+  width: 50px; /* Tamaño de los divs */
+  height: 50px; /* Tamaño de los divs */
+  background-color: lightgray; /* Color de fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* Hacerlo circular */
 }
 
 /* Aumentar translate para mover más a la derecha */
 .outer-div {
-    transform: rotate(calc(var(--i) * 36deg)) translate(185px) rotate(calc(var(--i) * -36deg));
+  transform: rotate(calc(var(--i) * 36deg)) translate(185px)
+    rotate(calc(var(--i) * -36deg));
 }
 body.modal-open {
-    padding-left: 16px !important; /* O el tamaño del scrollbar */
+  padding-left: 16px !important; /* O el tamaño del scrollbar */
 }
